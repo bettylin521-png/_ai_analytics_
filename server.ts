@@ -7,24 +7,24 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 app.use(express.json({ limit: '10mb' }));
 
 // 建立 Google GenAI 用戶端。
-// 遵循 lazy-initialization 原則，我們在 API 路由中做 null 檢查，以避免環境變數缺漏直接導致服務在 init 階段崩潰
+// 遵循 lazy-initialization 原則，避免環境變數缺漏直接導致服務在 init 階段崩潰
 let aiClient: GoogleGenAI | null = null;
 function getGenAI(): GoogleGenAI {
   if (!aiClient) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      throw new Error("找不到 GEMINI_API_KEY 環境變數，請至 Settings > Secrets 進行配置。");
+      throw new Error("找不到 GEMINI_API_KEY 環境變數，請在 .env 或伺服器環境變數中配置它。");
     }
     aiClient = new GoogleGenAI({
       apiKey: apiKey,
       httpOptions: {
         headers: {
-          'User-Agent': 'aistudio-build',
+          'User-Agent': 'express-server',
         }
       }
     });

@@ -1,6 +1,0 @@
-{
-  "name": "AI 會議記錄生成與翻譯工具",
-  "description": "一鍵將會議逐字稿與筆記，重整成結構化會議摘要、待辦行動清單，並支援翻譯成英文、日文、韓文等商務語言的 AI 智慧秘書。",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
